@@ -4,34 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>料金シミュレーション</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .simulation-area {
+            margin-top: 30px;
+            border: 1px solid black;
+            padding: 20px;
+        }
+        .notes {
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>オール電化住宅からLPガス＋電気への切り替えシミュレーション</h1>
+    <div class="container">
+        <div class="title">
+            オール電化住宅にお住いの方へ<br>
+            LPガス導入による料金シミュレーション
+        </div>
+        <div class="simulation-area">
+            <!-- 現在の電気料金枠 (左側) -->
+            <div style="width: 50%; float: left; padding: 10px; border-right: 1px solid black;">
+                <h3>現在の電気料金</h3>
+                <label for="monthSelect">対象月:</label>
+                <select id="monthSelect">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+                <br><br>
+        
+                <label><input type="radio" name="inputType" value="fee" onclick="toggleInput('fee')"> 電気料金</label>
+                <label><input type="radio" name="inputType" value="usage" onclick="toggleInput('usage')"> 使用量</label>
+                <br><br>
+        
+                <div class="input-group" id="feeGroup">
+                    <label for="electricityFee">電気料金:</label>
+                    <input type="number" id="electricityFee" placeholder="電気料金を入力">
+                </div>
+        
+                <div class="input-group" id="usageGroup">
+                    <label for="electricityUsage">使用量:</label>
+                    <input type="number" id="electricityUsage" placeholder="使用量を入力">
+                </div>
+                <br>
+        
+                <strong>計算結果:</strong>
+                <p id="calculatedValue">入力に基づく電気使用量または料金: -</p>
+                <p id="annualUsage">年間想定電気使用量: -</p>
+                <p id="annualFee">年間想定電気料金: -</p>
+            </div>
+        
+            <!-- LPガス導入後の料金枠 (右側) -->
+            <div style="width: 50%; float: right; padding: 10px;">
+                <h3>LPガス導入後の料金</h3>
+                <p id="estimatedAnnualUsage">想定される電気使用量（年間）: -</p>
+                <p id="estimatedAnnualFee">想定される電気料金（年間）: -</p>
+                <p id="lpgAnnualUsage">LPガス使用量（年間）: -</p>
+                <p id="lpgAnnualFee">LPガス料金（年間）: -</p>
+                <p id="combinedAnnualFee">電気＋LPガスの料金（年間）: -</p>
+                <br>
+                <h2 id="savings">年間で - 円お得になります!</h2>
+            </div>
+            <div style="clear: both;"></div>
+            <br>
+            <button onclick="calculateSavings()">節約額を計算</button>
+        </div>
+        <div class="notes">
+            ※ こちらのシミュレーションはあくまで参考値としてご利用ください。<br>
+            ※ 詳細な計算や条件については、直接お問い合わせください。<br>
+            <!-- 他の注釈を追加する場合は、こちらに記述 -->
+        </div>
+    </div>
 
-    <label for="monthSelect">対象月:</label>
-    <select id="monthSelect">
-        <option value="1">1月</option>
-        <option value="2">2月</option>
-        <option value="3">3月</option>
-        <option value="4">4月</option>
-        <option value="5">5月</option>
-        <option value="6">6月</option>
-        <option value="7">7月</option>
-        <option value="8">8月</option>
-        <option value="9">9月</option>
-        <option value="10">10月</option>
-        <option value="11">11月</option>
-        <option value="12">12月</option>
-    </select>
+    <script>
+        function toggleInput(type) {
+            if (type === 'fee') {
+                document.getElementById('feeGroup').style.display = 'block';
+                document.getElementById('usageGroup').style.display = 'none';
+            } else {
+                document.getElementById('feeGroup').style.display = 'none';
+                document.getElementById('usageGroup').style.display = 'block';
+            }
+        }
 
-    <label for="electricityValue">電気料金または使用量:</label>
-    <input type="number" id="electricityValue" placeholder="電気料金または使用量を入力">
-
-    <button onclick="calculateSavings()">節約額を計算</button>
-
-    <h2>計算結果:</h2>
-    <p id="result">ここに節約額が表示されます</p>
-
-    <script src="script.js"></script>
+        function calculateSavings() {
+            // ここで実際の計算ロジックを実装する
+            // ダミーの計算
+            const feeValue = document.getElementById('electricityFee').value;
+            const usageValue = document.getElementById('electricityUsage').value;
+            const savings = feeValue - usageValue;  // 仮の計算
+            document.getElementById('result').innerText = `節約可能な額: ${savings} 円`;
+        }
+    </script>
 </body>
 </html>
